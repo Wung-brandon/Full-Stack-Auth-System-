@@ -15,11 +15,11 @@ def send_code_to_user_email(email):
     otp_code = generateOtp()
     user = User.objects.get(email=email)
     current_site = "StyleSphere.com"
-    print("current_site:", current_site)
-    print("otp_code", otp_code)
+    # print("current_site:", current_site)
+    # print("otp_code", otp_code)
     email_body = f"Hi {user.first_name} thanks for signing up on {current_site}. Please verify your email with the \n one time password {otp_code}"
     from_email = settings.EMAIL_HOST_USER
     OneTimePassword.objects.create(user=user, code=otp_code)
     
-    send_email = EmailMessage(subject=subject, body=email_body, from_email=from_email, to_email=[email])
+    send_email = EmailMessage(subject=subject, body=email_body, from_email=from_email, to=[email])
     send_email.send(fail_silently=True)

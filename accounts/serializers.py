@@ -10,8 +10,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         fields = ['email', 'first_name', 'last_name', 'password', 'password2']
     
     def validate(self, attrs):
-        password = attrs.get('password')
-        password2 = attrs.get('password2')
+        password = attrs.get('password', '')
+        password2 = attrs.get('password2', '')
         if password != password2:
             raise serializers.ValidationError("Passwords do not match")
         # or method 2
@@ -27,3 +27,4 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             last_name = validated_data['last_name'],
             password = validated_data['password']
         )
+        return user
